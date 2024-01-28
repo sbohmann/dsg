@@ -1,3 +1,5 @@
+import {CodeWriter} from "../codewriter/codewriter.js";
+
 export function generateCCode(definition) {
     definition.structs.forEach(generateStruct)
 
@@ -6,11 +8,11 @@ export function generateCCode(definition) {
         writeModule()
 
         function writeHeader() {
-            
+            let out = CodeWriter()
         }
 
         function writeModule() {
-
+            let out = CodeWriter()
         }
     }
 }
