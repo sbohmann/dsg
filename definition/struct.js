@@ -1,4 +1,4 @@
-export function Struct(name) {
+export function StructDefinition(name) {
     let fields = []
 
     let self = {
@@ -14,4 +14,12 @@ export function Struct(name) {
     }
 
     return self
+}
+
+export function StructType(name) {
+    return {
+        name,
+        cType: `struct ${name}`,
+        includes: [`${name}.h`]
+    }
 }

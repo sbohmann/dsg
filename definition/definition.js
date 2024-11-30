@@ -1,11 +1,14 @@
-export function Definition() {
+export function DefinitionBuilder() {
     let structs = []
 
     let self = {
         structs,
-        struct(structDeclaration) {
-            structs.push(structDeclaration())
+        addStructs(... newStructs) {
+            structs.push(... newStructs)
             return self
+        },
+        build() {
+            return deepFreeze(structs)
         }
     }
 

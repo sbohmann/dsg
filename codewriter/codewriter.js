@@ -1,7 +1,7 @@
 import fs from 'fs'
 
 export function CodeWriter(path) {
-    let buffer = []
+    let buffer = ''
     let indentationLevel = 0
     let atNewLine = true
 
@@ -35,18 +35,24 @@ export function CodeWriter(path) {
         }
     }
 
+    function append(text) {
+        if (text !== undefined) {
+            buffer += text
+        }
+    }
+
     return {
         print(text) {
             indent()
-            buffer += text
+            append(text)
         },
         println(text) {
             indent()
-            buffer += text
+            append(text)
             newLine()
         },
-        block(startMarker, endMarker, code) {
-            beginBlock()
+        block(code, startMarker, endMarker) {
+            beginBlock(startMarker)
             code()
             endBlock(endMarker);
         },
@@ -58,8 +64,8 @@ export function CodeWriter(path) {
                 if (currentFileContent === buffer) {
                     return
                 }
-                fs.writeFileSync(path, buffer, 'utf8')
             }
+            fs.writeFileSync(path, buffer, 'utf8')
         }
     }
 }

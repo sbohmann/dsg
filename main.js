@@ -1,11 +1,17 @@
 import {generateCCode} from "./c/cgenerator.js";
-import {Definition} from "./definition/definition.js";
-import {Struct} from "./definition/struct.js";
-import {simpleTypes} from "./definition/simeple-types.js";
+import {DefinitionBuilder} from "./definition/definition.js";
+import {StructDefinition, StructType} from "./definition/struct.js"
+import {SimpleTypes} from "./definition/simeple-types.js";
+import {listType} from "./definition/list.js"
 
-const definition = Definition()
-    .struct(() => Struct('ExampleStruct')
-        .field('name', simpleTypes.string)
-        .field('n', simpleTypes.int16))
+let exampleStructName = 'ExampleStruct'
+let exampleStruct = StructDefinition(exampleStructName)
+    .field('name', SimpleTypes.string)
+    .field('n', SimpleTypes.int16)
+    .field('numbers', listType(SimpleTypes.int16))
+    .field('others', listType(StructType(exampleStructName)))
+
+const definition = DefinitionBuilder()
+    .addStructs(exampleStruct)
 
 generateCCode(definition)
